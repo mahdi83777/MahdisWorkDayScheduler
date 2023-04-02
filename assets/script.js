@@ -1,24 +1,114 @@
-// Wrap all code that interacts with the DOM in a call to jQuery to ensure that
-// the code isn't run until the browser has finished rendering all the elements
-// in the html.
-$(function () {
-    // TODO: Add a listener for click events on the save button. This code should
-    // use the id in the containing time-block as a key to save the user input in
-    // local storage. HINT: What does `this` reference in the click listener
-    // function? How can DOM traversal be used to get the "hour-x" id of the
-    // time-block containing the button that was clicked? How might the id be
-    // useful when saving the description in local storage?
-    //
-    // TODO: Add code to apply the past, present, or future class to each time
-    // block by comparing the id to the current hour. HINTS: How can the id
-    // attribute of each time-block be used to conditionally add or remove the
-    // past, present, and future classes? How can Day.js be used to get the
-    // current hour in 24-hour time?
-    //
-    // TODO: Add code to get any user input that was saved in localStorage and set
-    // the values of the corresponding textarea elements. HINT: How can the id
-    // attribute of each time-block be used to do this?
-    //
-    // TODO: Add code to display the current date in the header of the page.
-  });
-  
+var time = dayjs().format('HH');
+var userList = [];
+var timeList = [
+  "8 am",
+  "9 am",
+  "10 am",
+  "11 am",
+  "12 am",
+  "1 pm",
+  "2 pm",
+  "3 pm",
+  "4 pm",
+  "5 pm",
+  "6 pm",
+  "7 pm",
+  "8 pm",
+  "9 pm",
+  "10 pm"
+];
+
+var Container = document.querySelector("#timeslots-container");
+
+//date and time
+window.setInterval(function () {
+  $("#currentDay").text(dayjs().format("ddd MM/DD h:mm:ss a"));
+}, 1000);
+
+var displayTime = function () {
+    localTask();
+
+  //for loop to dynamically store each time
+  for (i = 0; i < timeList.length; i++) {
+    //create div for taskRows
+    var taskRows = document.createElement("div");
+    taskRows.classList = "row time-block justify-content-center";
+    //sets the id of each element to the index of our timeList
+    taskRows.id = timeList.indexOf(timeList[i]);
+
+    //creates timeSlot for each time
+    var timeSlot = document.createElement("h4");
+    timeSlot.classList = "hour col-1";
+    timeSlot.id = timeList.indexOf(timeList[i]);
+    timeSlot.textContent = timeList[i];
+    //append to task row
+    taskRows.appendChild(timeSlot);
+
+    //creates input field
+    var taskInp = document.createElement("input");
+    taskInp.classList = "time-block clearable col-md-9 description p-0";
+    taskInp.id = "input" + timeList.indexOf(timeList[i]);
+
+if (userList[i]) {
+    taskInp.value = userList[i];
+  }
+  taskRows.appendChild(taskInp);
+    
+    //create save and delete button
+    var saveBtn = document.createElement("button");
+    saveBtn.classList = "saveBtn col-1";
+    saveBtn.id = "btn" + timeList.indexOf(timeList[i]);
+    saveBtn.innerHTML = "<i class='far fa-save fa-lg'></i>";
+
+    var deleteBtn = document.createElement("button");
+    deleteBtn.classList = "deleteBtn col-1";
+    deleteBtn.id = "btn" + timeList.indexOf(timeList[i]);
+    deleteBtn.innerHTML = "<i class='far fa-trash-alt fa-lg'></i>";
+    
+    //adds save and delete button to task row
+    taskRows.appendChild(saveBtn);
+    taskRows.appendChild(deleteBtn);
+
+//append to taskRows
+    Container.appendChild(taskRows);
+
+
+    var timeTest = i + 8;
+    timeTest.toString();
+    
+    // variables to be used for comparison
+    var timeBlock = dayjs('2023-01-01 ' + timeTest).format('HH');  // 0-24 hr format
+
+
+
+   // present if the current time is equal or in between the block time
+   if (time == timeBlock) {
+            taskInp.classList = "present col-md-9 description p-0"
+        }
+        // past if the block time is before the current time
+        else if (timeBlock < time) {
+            taskInp.classList = "past col-md-9 description p-0"
+        }
+        // future if the block time is after the current time
+        else if (timeBlock > time) {
+            taskInp.classList = "future col-md-9 description p-0"
+            }
+  }
+};
+
+
+displayTime();
+
+//grab local storage
+function localTask() {
+  if (JSON.parse(localStorage.getItem("tasks"))){
+    userList = JSON.parse(localStorage.getItem("tasks"));
+  }
+}
+
+
+
+
+
+
+
