@@ -72,14 +72,11 @@ if (userList[i]) {
 //append to taskRows
     Container.appendChild(taskRows);
 
-
     var timeTest = i + 8;
     timeTest.toString();
     
     // variables to be used for comparison
     var timeBlock = dayjs('2023-01-01 ' + timeTest).format('HH');  // 0-24 hr format
-
-
 
    // present if the current time is equal or in between the block time
    if (time == timeBlock) {
@@ -95,7 +92,6 @@ if (userList[i]) {
             }
   }
 };
-
 
 displayTime();
 
