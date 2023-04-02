@@ -42,16 +42,16 @@ body {
   
   .past {
     background-color: #d3d3d3;
-    color: red;
+    color: rgb(139, 43, 43);
   }
   
   .present {
-    background-color: #ff6961;
+    background-color: #b37370;
     color: black;
   }
   
   .future {
-    background-color: #77dd77;
+    background-color: #245e24;
     color: black;
   }
   
