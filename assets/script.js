@@ -106,6 +106,27 @@ function localTask() {
   }
 }
 
+//save button
+$(".saveBtn").on("click", function () {
+    var taskTest = [];
+    for (var i = 0; i < timeList.length; i++){
+      taskTest.push(document.getElementsByTagName("input")[i].value);
+    }
+    userList = taskTest;
+    localStorage.setItem("tasks", JSON.stringify(userList));
+});
+
+//delete button
+$(".deleteBtn").on("click", function () {
+  userList = $(this).siblings("input").val("");
+  userList = $(this).siblings("input").val();
+  var taskTest = [];
+    for (var i = 0; i < timeList.length; i++){
+      taskTest.push(document.getElementsByTagName("input")[i].value);
+    }
+    userList = taskTest;
+    localStorage.setItem("tasks", JSON.stringify(userList));
+});
 
 
 
